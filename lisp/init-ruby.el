@@ -120,6 +120,7 @@
 ;; (add-to-list 'mmm-set-file-name-for-modes 'ruby-mode)
 
 
+(require-package 'rubocop)
 
 (provide 'init-ruby)
 ;;; init-ruby.el ends here
