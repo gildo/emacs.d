@@ -413,6 +413,9 @@ typical word processor."
      (sql . t)
      (sqlite . t))))
 
+(setq org-directory "~/org")
+(setq org-agenda-files '("~/org"))
+(setq org-default-notes-file (concat org-directory "/inbox.org"))
 
 (provide 'init-org)
 ;;; init-org.el ends here

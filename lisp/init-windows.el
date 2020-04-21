@@ -105,6 +105,8 @@ Call a second time to restore the original window configuration."
 (unless (memq window-system '(nt w32))
   (windmove-default-keybindings 'control))
 
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
+
 
 (provide 'init-windows)
 ;;; init-windows.el ends here
