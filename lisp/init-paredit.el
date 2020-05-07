@@ -41,6 +41,8 @@
   (if (memq this-command paredit-minibuffer-commands)
       (enable-paredit-mode)))
 
+(eval-after-load "paredit"
+  #'(define-key paredit-mode-map (kbd "C-j") 'eval-print-last-sexp))
 
 (provide 'init-paredit)
 ;;; init-paredit.el ends here

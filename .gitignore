@@ -51,3 +51,6 @@ site-lisp/package/
 .cache/
 /forge-database.sqlite
 /transient
+.trello
+request
+org-journal.cache

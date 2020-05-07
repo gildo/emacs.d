@@ -14,5 +14,13 @@
   (maybe-require-package 'ibuffer-projectile))
 
 
+(require-package 'eyebrowse)
+
+(setq eyebrowse-mode-line-separator " "
+      eyebrowse-new-workspace t)
+
+(eyebrowse-mode t)
+
+
 (provide 'init-projectile)
 ;;; init-projectile.el ends here

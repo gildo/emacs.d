@@ -22,8 +22,6 @@
 
 ;;; Code:
 
-(when *is-a-mac*
-  (maybe-require-package 'grab-mac-link))
 
 (maybe-require-package 'org-cliplink)
 
@@ -145,7 +143,7 @@ typical word processor."
 
 (setq org-capture-templates
       `(("t" "todo" entry (file "")  ; "" => `org-default-notes-file'
-         "* NEXT %?\n%U\n" :clock-resume t)
+         "* TODO %?\n%U\n" :clock-resume t)
         ("n" "note" entry (file "")
          "* %? :NOTE:\n%U\n%a\n" :clock-resume t)
         ))
@@ -193,108 +191,108 @@ typical word processor."
 
 ;;; To-do settings
 
-(setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-              (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
-              (sequence "WAITING(w@/!)" "DELEGATED(e!)" "HOLD(h)" "|" "CANCELLED(c@/!)")))
-      org-todo-repeat-to-state "NEXT")
+;; (setq org-todo-keywords
+;;       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+;;               (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
+;;               (sequence "WAITING(w@/!)" "DELEGATED(e!)" "HOLD(h)" "|" "CANCELLED(c@/!)")))
+;;       org-todo-repeat-to-state "NEXT")
 
-(setq org-todo-keyword-faces
-      (quote (("NEXT" :inherit warning)
-              ("PROJECT" :inherit font-lock-string-face))))
+;; (setq org-todo-keyword-faces
+;;       (quote (("NEXT" :inherit warning)
+;;               ("PROJECT" :inherit font-lock-string-face))))
 
 
 
 ;;; Agenda views
 
-(setq-default org-agenda-clockreport-parameter-plist '(:link t :maxlevel 3))
+;; (setq-default org-agenda-clockreport-parameter-plist '(:link t :maxlevel 3))
 
 
-(let ((active-project-match "-INBOX/PROJECT"))
+;; (let ((active-project-match "-INBOX/PROJECT"))
 
-  (setq org-stuck-projects
-        `(,active-project-match ("NEXT")))
+;;   (setq org-stuck-projects
+;;         `(,active-project-match ("NEXT")))
 
-  (setq org-agenda-compact-blocks t
-        org-agenda-sticky t
-        org-agenda-start-on-weekday nil
-        org-agenda-span 'day
-        org-agenda-include-diary nil
-        org-agenda-sorting-strategy
-        '((agenda habit-down time-up user-defined-up effort-up category-keep)
-          (todo category-up effort-up)
-          (tags category-up effort-up)
-          (search category-up))
-        org-agenda-window-setup 'current-window
-        org-agenda-custom-commands
-        `(("N" "Notes" tags "NOTE"
-           ((org-agenda-overriding-header "Notes")
-            (org-tags-match-list-sublevels t)))
-          ("g" "GTD"
-           ((agenda "" nil)
-            (tags "INBOX"
-                  ((org-agenda-overriding-header "Inbox")
-                   (org-tags-match-list-sublevels nil)))
-            (stuck ""
-                   ((org-agenda-overriding-header "Stuck Projects")
-                    (org-agenda-tags-todo-honor-ignore-options t)
-                    (org-tags-match-list-sublevels t)
-                    (org-agenda-todo-ignore-scheduled 'future)))
-            (tags-todo "-INBOX"
-                       ((org-agenda-overriding-header "Next Actions")
-                        (org-agenda-tags-todo-honor-ignore-options t)
-                        (org-agenda-todo-ignore-scheduled 'future)
-                        (org-agenda-skip-function
-                         '(lambda ()
-                            (or (org-agenda-skip-subtree-if 'todo '("HOLD" "WAITING"))
-                                (org-agenda-skip-entry-if 'nottodo '("NEXT")))))
-                        (org-tags-match-list-sublevels t)
-                        (org-agenda-sorting-strategy
-                         '(todo-state-down effort-up category-keep))))
-            (tags-todo ,active-project-match
-                       ((org-agenda-overriding-header "Projects")
-                        (org-tags-match-list-sublevels t)
-                        (org-agenda-sorting-strategy
-                         '(category-keep))))
-            (tags-todo "-INBOX/-NEXT"
-                       ((org-agenda-overriding-header "Orphaned Tasks")
-                        (org-agenda-tags-todo-honor-ignore-options t)
-                        (org-agenda-todo-ignore-scheduled 'future)
-                        (org-agenda-skip-function
-                         '(lambda ()
-                            (or (org-agenda-skip-subtree-if 'todo '("PROJECT" "HOLD" "WAITING" "DELEGATED"))
-                                (org-agenda-skip-subtree-if 'nottododo '("TODO")))))
-                        (org-tags-match-list-sublevels t)
-                        (org-agenda-sorting-strategy
-                         '(category-keep))))
-            (tags-todo "/WAITING"
-                       ((org-agenda-overriding-header "Waiting")
-                        (org-agenda-tags-todo-honor-ignore-options t)
-                        (org-agenda-todo-ignore-scheduled 'future)
-                        (org-agenda-sorting-strategy
-                         '(category-keep))))
-            (tags-todo "/DELEGATED"
-                       ((org-agenda-overriding-header "Delegated")
-                        (org-agenda-tags-todo-honor-ignore-options t)
-                        (org-agenda-todo-ignore-scheduled 'future)
-                        (org-agenda-sorting-strategy
-                         '(category-keep))))
-            (tags-todo "-INBOX"
-                       ((org-agenda-overriding-header "On Hold")
-                        (org-agenda-skip-function
-                         '(lambda ()
-                            (or (org-agenda-skip-subtree-if 'todo '("WAITING"))
-                                (org-agenda-skip-entry-if 'nottodo '("HOLD")))))
-                        (org-tags-match-list-sublevels nil)
-                        (org-agenda-sorting-strategy
-                         '(category-keep))))
-            ;; (tags-todo "-NEXT"
-            ;;            ((org-agenda-overriding-header "All other TODOs")
-            ;;             (org-match-list-sublevels t)))
-            )))))
+;;   (setq org-agenda-compact-blocks t
+;;         org-agenda-sticky t
+;;         org-agenda-start-on-weekday nil
+;;         org-agenda-span 'day
+;;         org-agenda-include-diary nil
+;;         org-agenda-sorting-strategy
+;;         '((agenda habit-down time-up user-defined-up effort-up category-keep)
+;;           (todo category-up effort-up)
+;;           (tags category-up effort-up)
+;;           (search category-up))
+;;         org-agenda-window-setup 'current-window
+;;         org-agenda-custom-commands
+;;         `(("N" "Notes" tags "NOTE"
+;;            ((org-agenda-overriding-header "Notes")
+;;             (org-tags-match-list-sublevels t)))
+;;           ("g" "GTD"
+;;            ((agenda "" nil)
+;;             (tags "INBOX"
+;;                   ((org-agenda-overriding-header "Inbox")
+;;                    (org-tags-match-list-sublevels nil)))
+;;             (stuck ""
+;;                    ((org-agenda-overriding-header "Stuck Projects")
+;;                     (org-agenda-tags-todo-honor-ignore-options t)
+;;                     (org-tags-match-list-sublevels t)
+;;                     (org-agenda-todo-ignore-scheduled 'future)))
+;;             (tags-todo "-INBOX"
+;;                        ((org-agenda-overriding-header "Next Actions")
+;;                         (org-agenda-tags-todo-honor-ignore-options t)
+;;                         (org-agenda-todo-ignore-scheduled 'future)
+;;                         (org-agenda-skip-function
+;;                          '(lambda ()
+;;                             (or (org-agenda-skip-subtree-if 'todo '("HOLD" "WAITING"))
+;;                                 (org-agenda-skip-entry-if 'nottodo '("NEXT")))))
+;;                         (org-tags-match-list-sublevels t)
+;;                         (org-agenda-sorting-strategy
+;;                          '(todo-state-down effort-up category-keep))))
+;;             (tags-todo ,active-project-match
+;;                        ((org-agenda-overriding-header "Projects")
+;;                         (org-tags-match-list-sublevels t)
+;;                         (org-agenda-sorting-strategy
+;;                          '(category-keep))))
+;;             (tags-todo "-INBOX/-NEXT"
+;;                        ((org-agenda-overriding-header "Orphaned Tasks")
+;;                         (org-agenda-tags-todo-honor-ignore-options t)
+;;                         (org-agenda-todo-ignore-scheduled 'future)
+;;                         (org-agenda-skip-function
+;;                          '(lambda ()
+;;                             (or (org-agenda-skip-subtree-if 'todo '("PROJECT" "HOLD" "WAITING" "DELEGATED"))
+;;                                 (org-agenda-skip-subtree-if 'nottododo '("TODO")))))
+;;                         (org-tags-match-list-sublevels t)
+;;                         (org-agenda-sorting-strategy
+;;                          '(category-keep))))
+;;             (tags-todo "/WAITING"
+;;                        ((org-agenda-overriding-header "Waiting")
+;;                         (org-agenda-tags-todo-honor-ignore-options t)
+;;                         (org-agenda-todo-ignore-scheduled 'future)
+;;                         (org-agenda-sorting-strategy
+;;                          '(category-keep))))
+;;             (tags-todo "/DELEGATED"
+;;                        ((org-agenda-overriding-header "Delegated")
+;;                         (org-agenda-tags-todo-honor-ignore-options t)
+;;                         (org-agenda-todo-ignore-scheduled 'future)
+;;                         (org-agenda-sorting-strategy
+;;                          '(category-keep))))
+;;             (tags-todo "-INBOX"
+;;                        ((org-agenda-overriding-header "On Hold")
+;;                         (org-agenda-skip-function
+;;                          '(lambda ()
+;;                             (or (org-agenda-skip-subtree-if 'todo '("WAITING"))
+;;                                 (org-agenda-skip-entry-if 'nottodo '("HOLD")))))
+;;                         (org-tags-match-list-sublevels nil)
+;;                         (org-agenda-sorting-strategy
+;;                          '(category-keep))))
+;;             ;; (tags-todo "-NEXT"
+;;             ;;            ((org-agenda-overriding-header "All other TODOs")
+;;             ;;             (org-match-list-sublevels t)))
+;;             )))))
 
 
-(add-hook 'org-agenda-mode-hook 'hl-line-mode)
+;; (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
 
 ;;; Org clock
@@ -335,16 +333,6 @@ typical word processor."
 
 
 
-(when (and *is-a-mac* (file-directory-p "/Applications/org-clock-statusbar.app"))
-  (add-hook 'org-clock-in-hook
-            (lambda () (call-process "/usr/bin/osascript" nil 0 nil "-e"
-                                (concat "tell application \"org-clock-statusbar\" to clock in \"" org-clock-current-task "\""))))
-  (add-hook 'org-clock-out-hook
-            (lambda () (call-process "/usr/bin/osascript" nil 0 nil "-e"
-                                "tell application \"org-clock-statusbar\" to clock out"))))
-
-
-
 ;; TODO: warn about inconsistent items, e.g. TODO inside non-PROJECT
 ;; TODO: nested projects!
 
@@ -355,8 +343,6 @@ typical word processor."
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archive")
 
-
-
 
 
 (require-package 'org-pomodoro)
@@ -365,32 +351,8 @@ typical word processor."
   (define-key org-agenda-mode-map (kbd "P") 'org-pomodoro))
 
 
-;; ;; Show iCal calendars in the org agenda
-;; (when (and *is-a-mac* (require 'org-mac-iCal nil t))
-;;   (setq org-agenda-include-diary t
-;;         org-agenda-custom-commands
-;;         '(("I" "Import diary from iCal" agenda ""
-;;            ((org-agenda-mode-hook #'org-mac-iCal)))))
-
-;;   (add-hook 'org-agenda-cleanup-fancy-diary-hook
-;;             (lambda ()
-;;               (goto-char (point-min))
-;;               (save-excursion
-;;                 (while (re-search-forward "^[a-z]" nil t)
-;;                   (goto-char (match-beginning 0))
-;;                   (insert "0:00-24:00 ")))
-;;               (while (re-search-forward "^ [a-z]" nil t)
-;;                 (goto-char (match-beginning 0))
-;;                 (save-excursion
-;;                   (re-search-backward "^[0-9]+:[0-9]+-[0-9]+:[0-9]+ " nil t))
-;;                 (insert (match-string 0))))))
-
-
 (after-load 'org
-  (define-key org-mode-map (kbd "C-M-<up>") 'org-up-element)
-  (when *is-a-mac*
-    (define-key org-mode-map (kbd "M-h") nil)
-    (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)))
+  (define-key org-mode-map (kbd "C-M-<up>") 'org-up-element))
 
 (after-load 'org
   (org-babel-do-load-languages
@@ -413,9 +375,26 @@ typical word processor."
      (sql . t)
      (sqlite . t))))
 
+;;; org-journal
+(require 'org-journal)
+(customize-set-variable 'org-journal-dir "~/org/journal/")
+(customize-set-variable 'org-journal-date-format "%A, %d %B %Y")
+
+;;; Personal configuration
 (setq org-directory "~/org")
 (setq org-agenda-files '("~/org"))
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
+(setq org-journal-enable-agenda-integration t)
+
+(defun org-journal-save-entry-and-exit()
+  "Simple convenience function.
+  Saves the buffer of the current day's entry and kills the window
+  Similar to org-capture like behavior"
+  (interactive)
+  (save-buffer)
+  (kill-buffer-and-window))
+
+(define-key org-journal-mode-map (kbd "C-c C-c") 'org-journal-save-entry-and-exit)
 
 (provide 'init-org)
 ;;; init-org.el ends here
