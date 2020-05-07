@@ -134,13 +134,10 @@
 (require 'init-ledger)
 ;; Extra packages which don't require any configuration
 
-<<<<<<< HEAD
 ;; TELEGRAM!
 ;; (require 'init-telegram)
 
-=======
 (require-package 'sudo-edit)
->>>>>>> upstream/master
 (require-package 'gnuplot)
 (require-package 'lua-mode)
 (require-package 'htmlize)
